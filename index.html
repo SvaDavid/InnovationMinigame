@@ -9,8 +9,22 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <!-- Add Firebase products that you want to use -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-
-
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyB2CT9J8c6d4RUCQTV63aerPWRZ__T8R5E",
+            authDomain: "innovation-minigame.firebaseapp.com",
+            databaseURL: "https://innovation-minigame.firebaseio.com",
+            projectId: "innovation-minigame",
+            storageBucket: "innovation-minigame.appspot.com",
+            messagingSenderId: "1234567890",
+            appId: "1:1234567890:web:abcdef123456",
+            measurementId: "G-2K8YQMLJ44"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        var database = firebase.database();
+    </script>
 </head>
 <body>
     <div class="container">
@@ -230,31 +244,230 @@
                 <p>Celkový rozpočet alokovaný do projektu: <span id="totalBudget">0€</span></p>
                 <p>Očekávané výnosy: <span id="expectedRevenue">0€</span></p>
             </div>
+
+            <!-- Část pro leaderboard -->
+            <div id="leaderboard" style="display: none;">
+                <h2>Leaderboard</h2>
+                <table id="leaderboardTable">
+                    <thead>
+                        <tr>
+                            <th>Jméno hráče</th>
+                            <th>Název nápadu</th>
+                            <th>Očekávané výnosy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Sem budou dynamicky přidávány výsledky -->
+                    </tbody>
+                </table>
+                <button id="resetLeaderboard">Resetovat leaderboard</button>
+            </div>
         </div>
     </div>
 
+    <!-- Přidání prvků pro zobrazení sekundárního okna (pokud je potřebné) -->
     <div id="timeCounter" style="display: none;"></div>
     <div id="budgetCounter" style="display: none;"></div>
 
-    <!-- Část pro leaderboard -->
-    <div id="leaderboard" style="display: none;">
-        <h2>Leaderboard</h2>
-        <table id="leaderboardTable">
-            <thead>
-                <tr>
-                    <th>Jméno hráče</th>
-                    <th>Název nápadu</th>
-                    <th>Očekávané výnosy</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Sem budou dynamicky přidávány výsledky -->
-            </tbody>
-        </table>
-        <button id="resetLeaderboard">Resetovat leaderboard</button>
-    </div>
+    <script>
+        let totalTime = 0;
+        let totalBudget = 0;
 
+        // Funkce pro kalkulaci očekávaných výnosů na základě hodnocení
+        function calculateExpectedRevenue() {
+            let scalabilityElement = document.getElementById('scalability');
+            let acquisitionElement = document.getElementById('acquisition');
 
-    <script src="script.js"></script>
+            if (!scalabilityElement || !acquisitionElement) {
+                console.error('Scalability or acquisition element not found');
+                return 0; // Nebo jiná vhodná výchozí hodnota
+            }
+
+            let scalability = parseInt(scalabilityElement.value);
+            let acquisition = parseInt(acquisitionElement.value);
+
+            // Jednoduchý příklad kalkulace výnosů na základě hodnocení (lze upravit)
+            let expectedRevenue = (scalability + acquisition) * 10000; // Příklad výpočtu
+            return expectedRevenue;
+        }
+
+        // Funkce pro aktualizaci času v sekundárním okně
+        function updateTimeCounter(time) {
+            totalTime += parseInt(time);
+            let timeCounterElement = document.getElementById('timeCounter');
+            if (timeCounterElement) {
+                timeCounterElement.textContent = totalTime + ' MD';
+            }
+        }
+
+        // Funkce pro aktualizaci financí v sekundárním okně
+        function updateBudgetCounter(budget) {
+            totalBudget += parseInt(budget);
+            let budgetCounterElement = document.getElementById('budgetCounter');
+            if (budgetCounterElement) {
+                budgetCounterElement.textContent = totalBudget + '€';
+            }
+        }
+
+        // Funkce pro přidání záznamu do leaderboardu a uložení do Firebase
+        function addToLeaderboard(playerName, ideaName, expectedRevenue) {
+            // Přidání do Firebase
+            var newEntryKey = firebase.database().ref().child('leaderboard').push().key;
+            firebase.database().ref('leaderboard/' + newEntryKey).set({
+                playerName: playerName,
+                ideaName: ideaName,
+                expectedRevenue: expectedRevenue
+            });
+        }
+
+        // Funkce pro načtení leaderboardu z Firebase
+        function loadLeaderboard() {
+            const leaderboardTable = document.getElementById('leaderboardTable').getElementsByTagName('tbody')[0];
+            leaderboardTable.innerHTML = ''; // Vyčistí existující řádky
+
+            firebase.database().ref('leaderboard').orderByChild('expectedRevenue').once('value', function(snapshot) {
+                let leaderboard = [];
+                snapshot.forEach(function(childSnapshot) {
+                    let entry = childSnapshot.val();
+                    leaderboard.push(entry);
+                });
+
+                // Seřadíme leaderboard podle očekávaného výnosu sestupně
+                leaderboard.sort((a, b) => b.expectedRevenue - a.expectedRevenue);
+
+                leaderboard.forEach(entry => {
+                    const newRow = leaderboardTable.insertRow();
+
+                    const playerNameCell = newRow.insertCell(0);
+                    const ideaNameCell = newRow.insertCell(1);
+                    const expectedRevenueCell = newRow.insertCell(2);
+
+                    playerNameCell.textContent = entry.playerName;
+                    ideaNameCell.textContent = entry.ideaName;
+                    expectedRevenueCell.textContent = entry.expectedRevenue + '€';
+                });
+            });
+        }
+
+        // Funkce pro resetování leaderboardu
+        function resetLeaderboard() {
+            firebase.database().ref('leaderboard').remove();
+            loadLeaderboard(); // Načte (prázdný) leaderboard
+        }
+
+        // Načtení leaderboardu při načítání stránky
+        window.onload = function() {
+            loadLeaderboard();
+            document.getElementById('leaderboard').style.display = 'block';
+            document.getElementById('resetLeaderboard').addEventListener('click', resetLeaderboard);
+        }
+
+        // Po odeslání formuláře pro zadání názvu nápadu a jména hráče
+        document.getElementById('inputForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            // Skryje formulář pro zadání názvu nápadu a jména hráče
+            this.style.display = 'none';
+            // Zobrazí formulář pro hodnocení nápadu
+            document.getElementById('ratingForm').style.display = 'block';
+        });
+
+        // Po odeslání formuláře pro hodnocení nápadu
+        document.getElementById('submitRating').addEventListener('click', function() {
+            // Skryje formulář pro hodnocení nápadu
+            document.getElementById('ratingForm').style.display = 'none';
+            // Zobrazí formulář pro výzkum
+            document.getElementById('researchForm').style.display = 'block';
+        });
+
+        // Po odeslání formuláře pro výzkum
+        document.getElementById('submitResearch').addEventListener('click', function() {
+            // Aktualizujeme hodnoty v sekundárním okně
+            let timeValue = document.getElementById('researchTime').value;
+            let budgetValue = document.getElementById('researchBudget').value;
+            updateTimeCounter(timeValue);
+            updateBudgetCounter(budgetValue);
+
+            // Skryje formulář pro výzkum
+            document.getElementById('researchForm').style.display = 'none';
+            // Zobrazí formulář pro design sprint
+            document.getElementById('designSprintForm').style.display = 'block';
+        });
+
+        // Po odeslání formuláře pro design sprint
+        document.getElementById('submitDesignSprint').addEventListener('click', function() {
+            // Aktualizujeme hodnoty v sekundárním okně
+            let designTimeValue = document.getElementById('designTime').value;
+            let designBudgetValue = document.getElementById('designBudget').value;
+            updateTimeCounter(designTimeValue);
+            updateBudgetCounter(designBudgetValue);
+
+            // Skryje formulář pro design sprint
+            document.getElementById('designSprintForm').style.display = 'none';
+            // Zobrazí formulář pro development
+            document.getElementById('developmentForm').style.display = 'block';
+        });
+
+        // Po odeslání formuláře pro development
+        document.getElementById('submitDevelopment').addEventListener('click', function() {
+            // Aktualizujeme hodnoty v sekundárním okně
+            let developmentTimeValue = document.getElementById('developmentTime').value;
+            let developmentBudgetValue = document.getElementById('developmentBudget').value;
+            updateTimeCounter(developmentTimeValue);
+            updateBudgetCounter(developmentBudgetValue);
+
+            // Kalkulace očekávaných výnosů
+            let expectedRevenue = calculateExpectedRevenue();
+
+            // Získání názvu nápadu a jména hráče
+            let ideaName = document.getElementById('ideaName').value;
+            let playerName = document.getElementById('playerName').value;
+
+            // Přidání výsledků do leaderboardu
+            addToLeaderboard(playerName, ideaName, expectedRevenue);
+
+            // Skryje formulář pro development
+            document.getElementById('developmentForm').style.display = 'none';
+            // Zobrazí business case summary
+            document.getElementById('businessCaseSummary').style.display = 'block';
+            document.getElementById('totalTime').textContent = totalTime + ' MD';
+            document.getElementById('totalBudget').textContent = totalBudget + '€';
+            document.getElementById('expectedRevenue').textContent = expectedRevenue + '€';
+
+            console.log('Business Case Summary displayed'); // Debugovací výpis
+
+            // Zobrazí leaderboard
+            document.getElementById('leaderboard').style.display = 'block';
+        });
+
+        // Posluchač události pro změnu hodnoty posuvníku pro čas výzkumu
+        document.getElementById('researchTime').addEventListener('input', function() {
+            document.getElementById('researchTimeLabel').textContent = this.value + ' MD';
+        });
+
+        // Posluchač události pro změnu hodnoty posuvníku pro rozpočet výzkumu
+        document.getElementById('researchBudget').addEventListener('input', function() {
+            document.getElementById('researchBudgetLabel').textContent = this.value + '€';
+        });
+
+        // Posluchač události pro změnu hodnoty posuvníku pro čas design sprintu
+        document.getElementById('designTime').addEventListener('input', function() {
+            document.getElementById('designTimeLabel').textContent = this.value + ' MD';
+        });
+
+        // Posluchač události pro změnu hodnoty posuvníku pro rozpočet design sprintu
+        document.getElementById('designBudget').addEventListener('input', function() {
+            document.getElementById('designBudgetLabel').textContent = this.value + '€';
+        });
+
+        // Posluchač události pro změnu hodnoty posuvníku pro čas developmentu
+        document.getElementById('developmentTime').addEventListener('input', function() {
+            document.getElementById('developmentTimeLabel').textContent = this.value + ' MD';
+        });
+
+        // Posluchač události pro změnu hodnoty posuvníku pro rozpočet developmentu
+        document.getElementById('developmentBudget').addEventListener('input', function() {
+            document.getElementById('developmentBudgetLabel').textContent = this.value + '€';
+        });
+    </script>
 </body>
 </html>
