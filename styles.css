@@ -1,0 +1,105 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2; /* Svetlosivé pozadí stránky */
+    margin: 0; /* Odstranění vnějšího okraje */
+    padding: 0; /* Odstranění vnitřního okraje */
+}
+
+h1 {
+    text-align: center;
+}
+
+form {
+    margin: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0; /* Přidáme horní a dolní mezery */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* Zahrnuje i padding a border do celkové šířky */
+}
+
+button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#result {
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    display: none;
+}
+
+.container {
+    max-width: 800px;
+    background-color: #ffffff; /* Bílé pozadí pro container */
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px;
+    margin: 20px auto; /* Vycentrovat container a přidat horní a dolní mezery */
+    padding: 20px;
+    border-radius: 5px;
+}
+
+
+
+.checkbox-group {
+    margin-bottom: 10px;
+}
+
+.checkbox-group label {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.rating-section {
+    display: flex;
+    flex-wrap: wrap; /* Povolení zalamování na další řádek */
+    gap: 20px; /* Prostor mezi prvky */
+}
+
+.rating-group {
+    flex-basis: 50%; /* Šířka prvků v každém sloupci */
+}
+
+.rating-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+#leaderboard {
+    margin-top: 20px;
+}
+
+#leaderboardTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#leaderboardTable th, #leaderboardTable td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+#leaderboardTable th {
+    background-color: #f2f2f2;
+}
