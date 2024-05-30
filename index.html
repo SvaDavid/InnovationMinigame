@@ -8,20 +8,21 @@
 </head>
 <body>
     <div class="container">
-        <div class="main-window">
+        <div id="main-window" class="main-window">
+            <button id="adminButton">Admin</button>
             <h1>Innovation Minigame</h1>
-            <!-- Formulář pro zadání názvu nápadu a jména hráče -->
+            <!-- Formulár pre zadanie názvu nápadu a mena hráča -->
             <form id="startForm">
-                <label for="ideaName">Název nápadu:</label>
+                <label for="ideaName">Názov nápadu:</label>
                 <input type="text" id="ideaName" name="ideaName" required>
-            
-                <label for="playerName">Vaše jméno:</label>
+
+                <label for="playerName">Vaše meno:</label>
                 <input type="text" id="playerName" name="playerName" required>
-            
+
                 <button id="submitStart" type="button">Ďalej</button>
             </form>
 
-            <!-- Formulář pro hodnocení nápadu (skrytý na začátku) -->
+            <!-- Formulár pre hodnotenie nápadu (skrytý na začiatku) -->
             <form id="ratingForm" style="display: none;">
                 <div class="column">
                     <!-- Skupina Market -->                
@@ -166,15 +167,15 @@
                 <button id="submitRating" type="button">Ďalej</button>
             </form>
 
-            <!-- Formulář pro výzkum (skrytý na začátku) -->
+            <!-- Formulár pre výskum (skrytý na začiatku) -->
             <form id="researchForm" style="display: none;">
-                <h2>Výzkum</h2>
+                <h2>Výskum</h2>
                 <div class="checkbox-group">
-                    <label for="quantitative">Kvantitativní</label>
+                    <label for="quantitative">Kvantitatívny</label>
                     <input type="checkbox" id="quantitative" name="researchType" value="quantitative">
                 </div>
                 <div class="checkbox-group">
-                    <label for="qualitative">Kvalitativní</label>
+                    <label for="qualitative">Kvalitatívny</label>
                     <input type="checkbox" id="qualitative" name="researchType" value="qualitative">
                 </div>
                 <div class="checkbox-group">
@@ -182,16 +183,24 @@
                     <input type="checkbox" id="mixed" name="researchType" value="mixed">
                 </div>
             
-                <label for="researchTime">Čas na výzkum (hodiny): <span id="researchTimeLabel">0 MD</span></label>
+                <label for="researchTime">Čas na výskum (hodiny): <span id="researchTimeLabel">0 MD</span></label>
                 <input type="range" id="researchTime" name="researchTime" min="0" max="10" step="1" value="0">
         
-                <label for="researchBudget">Rozpočet na výzkum (€): <span id="researchBudgetLabel">0€</span></label>
+                <label for="researchBudget">Rozpočet na výskum (€): <span id="researchBudgetLabel">0€</span></label>
                 <input type="range" id="researchBudget" name="researchBudget" min="0" max="30000" step="100" value="0">
             
                 <button id="submitResearch" type="button">Ďalej</button>
             </form>
 
-            <!-- Formulář pro design sprint (skrytý na začátku) -->
+            <!-- Zobrazenie scenárov výskumu (skryté na začiatku) -->
+            <div id="researchScenarios" style="display: none;">
+                <h2>Research Scenario</h2>
+                <p id="scenarioText"></p>
+                <button id="option1"></button>
+                <button id="option2"></button>
+            </div>
+
+            <!-- Formulár pre design sprint (skrytý na začiatku) -->
             <form id="designSprintForm" style="display: none;">
                 <h2>Design Sprint</h2>
 
@@ -204,7 +213,7 @@
                 <button id="submitDesignSprint" type="button">Ďalej</button>
             </form>
 
-            <!-- Formulář pro development (skrytý na začátku) -->
+            <!-- Formulár pre development (skrytý na začiatku) -->
             <form id="developmentForm" style="display: none;">
                 <h2>Development</h2>
 
@@ -217,15 +226,16 @@
                 <button id="submitDevelopment" type="button">Ďalej</button>
             </form>
 
-            <!-- Část pro business case summary (skrytá na začátku) -->
+            <!-- Časť pre business case summary (skrytá na začiatku) -->
             <div id="businessCaseSummary" style="display: none;">
                 <h2>Business Case Summary</h2>
                 <p>Celkový čas alokovaný do projektu: <span id="totalTime">0 MD</span></p>
                 <p>Celkový rozpočet alokovaný do projektu: <span id="totalBudget">0€</span></p>
-                <p>Očekávané výnosy: <span id="expectedRevenue">0€</span></p>
+                <p>Očakávané výnosy: <span id="expectedRevenue">0€</span></p>
+                <button id="startAgain">Start Again</button>
             </div>
 
-            <!-- Část pro leaderboard -->
+            <!-- Časť pre leaderboard -->
             <div id="leaderboard" style="display: none;">
                 <h2>Leaderboard</h2>
                 <table id="leaderboardTable">
@@ -237,17 +247,32 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Sem budou dynamicky přidávány výsledky -->
+                        <!-- Sem budú dynamicky pridávané výsledky -->
                     </tbody>
                 </table>
-                <button id="resetLeaderboard">Resetovat leaderboard</button>
+                <button id="resetLeaderboard">Resetovať leaderboard</button>
+                <button id="startAgain">Start Again</button>
             </div>
         </div>
-    </div>
 
-    <!-- Přidání prvků pro zobrazení sekundárního okna (pokud je potřebné) -->
-    <div id="timeCounter" style="display: none;"></div>
-    <div id="budgetCounter" style="display: none;"></div>
+        <!-- Admin view (skryté na začiatku) -->
+        <div id="adminView" style="display: none;">
+            <h2>Admin Settings</h2>
+            <form id="adminForm">
+                <label for="bonusKeywords">Bonus Keywords (comma separated):</label>
+                <input type="text" id="bonusKeywords" name="bonusKeywords" value="AI, Innovation">
+                <label for="maxAllowedTime">Max Allowed Time (MD):</label>
+                <input type="number" id="maxAllowedTime" name="maxAllowedTime" value="50">
+                <label for="maxAllowedBudget">Max Allowed Budget (€):</label>
+                <input type="number" id="maxAllowedBudget" name="maxAllowedBudget" value="100000">
+                <button id="saveAdminSettings" type="button">Save Settings</button>
+            </form>
+            <button id="backToGame">Back to Game</button>
+        </div>
+
+        <div id="timeCounter" style="display: none;"></div>
+        <div id="budgetCounter" style="display: none;"></div>
+    </div>
+    <script type="module" src="script.js"></script>
 </body>
-<script type="module" src="script.js"></script>
 </html>
