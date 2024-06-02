@@ -30,7 +30,6 @@ function calculateExpectedRevenue() {
     let scalabilityElement = document.getElementById('scalability');
     let acquisitionElement = document.getElementById('acquisition');
     let originalityElement = document.getElementById('originality');
-    let marketRelevanceElement = document.getElementById('marketRelevance');
 
     let quantitativeChecked = document.getElementById('quantitative').checked;
     let qualitativeChecked = document.getElementById('qualitative').checked;
@@ -44,7 +43,7 @@ function calculateExpectedRevenue() {
     let developmentTime = parseInt(document.getElementById('developmentTime').value);
     let developmentBudget = parseInt(document.getElementById('developmentBudget').value);
 
-    if (!scalabilityElement || !acquisitionElement || !originalityElement || !marketRelevanceElement) {
+    if (!scalabilityElement || !acquisitionElement || !originalityElement) {
         console.error('One or more rating elements not found');
         return 0;
     }
@@ -52,13 +51,12 @@ function calculateExpectedRevenue() {
     let scalability = parseInt(scalabilityElement.value);
     let acquisition = parseInt(acquisitionElement.value);
     let originality = parseInt(originalityElement.value);
-    let marketRelevance = parseInt(marketRelevanceElement.value);
 
     // Adding randomization factor
     let randomFactor = 0.9 + Math.random() * 0.2; // between 0.9 and 1.1
 
     // Example calculation of expected revenue
-    let baseScore = (scalability + acquisition + originality + marketRelevance) * 10000 * randomFactor;
+    let baseScore = (scalability + acquisition + originality) * 10000 * randomFactor;
 
     // Adjust score based on research phase decisions
     let researchScore = 0;
@@ -92,6 +90,8 @@ function calculateExpectedRevenue() {
             console.log(`Bonus added for keyword: ${keyword}`);
         }
     });
+
+    totalScore = Math.round(totalScore);  // Round the total score to the nearest whole number
 
     console.log(`Current score: ${totalScore}`);  // Log the partial score
     return totalScore;
@@ -139,8 +139,12 @@ function loadLeaderboardData() {
 function updateTimeCounter(time) {
     totalTime += parseInt(time);
     let timeCounterElement = document.getElementById('timeCounter');
+    let totalMDElement = document.getElementById('totalMD');
     if (timeCounterElement) {
         timeCounterElement.textContent = totalTime + ' MD';
+    }
+    if (totalMDElement) {
+        totalMDElement.textContent = totalTime;
     }
     console.log(`Total time updated to: ${totalTime} MD`);
 }
@@ -148,9 +152,9 @@ function updateTimeCounter(time) {
 // Function to update budget counter
 function updateBudgetCounter(budget) {
     totalBudget += parseInt(budget);
-    let budgetCounterElement = document.getElementById('budgetCounter');
-    if (budgetCounterElement) {
-        budgetCounterElement.textContent = totalBudget + '€';
+    let totalBudgetElement = document.getElementById('totalBudgetStatus');
+    if (totalBudgetElement) {
+        totalBudgetElement.textContent = totalBudget + '€';
     }
     console.log(`Total budget updated to: ${totalBudget}€`);
 }
@@ -202,6 +206,7 @@ function showResearchScenario() {
     if (currentScenarioIndex >= researchScenarios.length) {
         document.getElementById('researchScenarios').style.display = 'none';
         document.getElementById('designSprintForm').style.display = 'block'; // Move to next phase
+        toggleStatusWindow('designSprintForm');
         return;
     }
 
@@ -209,11 +214,15 @@ function showResearchScenario() {
     const scenarioText = document.getElementById('scenarioText');
     const option1 = document.getElementById('option1');
     const option2 = document.getElementById('option2');
+    const option1Effects = document.getElementById('option1Effects');
+    const option2Effects = document.getElementById('option2Effects');
 
-    if (scenarioText && option1 && option2) {
+    if (scenarioText && option1 && option2 && option1Effects && option2Effects) {
         scenarioText.textContent = scenario.text;
         option1.textContent = scenario.options[0].text;
         option2.textContent = scenario.options[1].text;
+        option1Effects.textContent = `Time: +${scenario.options[0].effect.time} MD, Budget: +${scenario.options[0].effect.budget}€`;
+        option2Effects.textContent = `Time: +${scenario.options[1].effect.time} MD, Budget: +${scenario.options[1].effect.budget}€`;
 
         option1.onclick = function() {
             let additionalTime = scenario.options[0].effect.time;
@@ -224,8 +233,13 @@ function showResearchScenario() {
             console.log(`Selected option 1: Time +${additionalTime} MD, Budget +${additionalBudget}€`);
 
             currentScenarioIndex++;
-            document.getElementById('researchScenarios').style.display = 'none';
-            document.getElementById('designSprintForm').style.display = 'block'; // Move to next phase
+            document.getElementById('researchScenarios').classList.add('fade-out');
+            setTimeout(() => {
+                document.getElementById('researchScenarios').style.display = 'none';
+                document.getElementById('designSprintForm').style.display = 'block';
+                document.getElementById('designSprintForm').classList.add('fade-in');
+                toggleStatusWindow('designSprintForm');
+            }, 500); // Match the duration of the slide-out animation
         };
 
         option2.onclick = function() {
@@ -237,12 +251,18 @@ function showResearchScenario() {
             console.log(`Selected option 2: Time +${additionalTime} MD, Budget +${additionalBudget}€`);
 
             currentScenarioIndex++;
-            document.getElementById('researchScenarios').style.display = 'none';
-            document.getElementById('designSprintForm').style.display = 'block'; // Move to next phase
+            document.getElementById('researchScenarios').classList.add('fade-out');
+            setTimeout(() => {
+                document.getElementById('researchScenarios').style.display = 'none';
+                document.getElementById('designSprintForm').style.display = 'block';
+                document.getElementById('designSprintForm').classList.add('fade-in');
+                toggleStatusWindow('designSprintForm');
+            }, 500); // Match the duration of the slide-out animation
         };
 
         document.getElementById('researchForm').style.display = 'none';
         document.getElementById('researchScenarios').style.display = 'block';
+        document.getElementById('researchScenarios').classList.add('fade-in');
         console.log('Displaying research scenario:', scenario.text);
     } else {
         console.error("One or more elements for displaying the scenario are missing.");
@@ -275,6 +295,11 @@ document.getElementById('submitRating').addEventListener('click', function() {
     handleFormSubmission('ratingForm', 'researchForm');
 });
 
+// Event listener for back button in rating form
+document.getElementById('backRating').addEventListener('click', function() {
+    handleFormSubmission('ratingForm', 'startForm');
+});
+
 // Event listener for design sprint form submission
 document.getElementById('submitDesignSprint').addEventListener('click', function() {
     let designTimeValue = document.getElementById('designTime').value;
@@ -284,6 +309,74 @@ document.getElementById('submitDesignSprint').addEventListener('click', function
 
     console.log(`Partial score after design sprint: ${calculateExpectedRevenue()}`);
     handleFormSubmission('designSprintForm', 'developmentForm');
+});
+
+// Event listener for back button in design sprint form
+document.getElementById('backDesignSprint').addEventListener('click', function() {
+    handleFormSubmission('designSprintForm', 'researchForm');
+});
+
+// Function to show the leaderboard after business case summary
+function showLeaderboard() {
+    document.getElementById('businessCaseSummary').style.display = 'block';
+
+    const leaderboardContainer = document.getElementsByClassName('container-leaderboard')[0];
+    if (leaderboardContainer) {
+        leaderboardContainer.style.display = 'block';
+        console.log('Leaderboard displayed');
+    } else {
+        console.error('Leaderboard container not found');
+    }
+}
+// Event listener for development form submission
+document.getElementById('submitDevelopment').addEventListener('click', function(e) {
+    e.preventDefault(); // Prevent default form submission
+
+    let developmentTimeValue = parseInt(document.getElementById('developmentTime').value);
+    let developmentBudgetValue = parseInt(document.getElementById('developmentBudget').value);
+    updateTimeCounter(developmentTimeValue);
+    updateBudgetCounter(developmentBudgetValue);
+
+    let expectedRevenue = calculateExpectedRevenue();
+    console.log(`Final score: ${expectedRevenue}`);
+
+    let ideaName = document.getElementById('ideaName').value;
+    let playerName = document.getElementById('playerName').value;
+
+    handleFormSubmission('developmentForm', 'businessCaseSummary');
+    document.getElementById('totalTime').textContent = totalTime + ' MD';
+    document.getElementById('totalBudget').textContent = totalBudget + '€';
+    document.getElementById('expectedRevenue').textContent = expectedRevenue;
+
+    set(ref(db, 'response/' + ideaName), {
+        Názov_nápadu: ideaName,
+        Meno_hráča: playerName,
+        Skore: expectedRevenue
+    }).then(() => {
+        console.log("Data saved to Firebase");
+
+        loadLeaderboardData();
+        showLeaderboard();
+
+        document.getElementById('leaderboard').style.display = 'block';
+        const leaderboardContainer = document.getElementsByClassName('container-leaderboard')[0];
+        if (leaderboardContainer) {
+            leaderboardContainer.style.display = 'block';
+            console.log('Leaderboard displayed');
+        } else {
+            console.error('Leaderboard container not found');
+        }
+
+    }).catch((error) => {
+        console.error("Error saving data: ", error);
+    });
+
+    console.log('Business Case Summary displayed');
+});
+
+// Event listener for back button in development form
+document.getElementById('backDevelopment').addEventListener('click', function() {
+    handleFormSubmission('developmentForm', 'designSprintForm');
 });
 
 // Function to reset the game
@@ -314,9 +407,26 @@ function resetGame() {
     document.getElementById('researchScenarios').style.display = 'none';
     document.getElementById('designSprintForm').style.display = 'none';
     document.getElementById('developmentForm').style.display = 'none';
+    //document.getElementsByClassName('container-leaderboard').style.display = 'block';
+
+    // Hide the leaderboard container
+    //document.getElementsByClassName('container-leaderboard')[0].style.display = 'none';
 
     // Show the start form
     document.getElementById('startForm').style.display = 'block';
+
+    // Remove animation classes from all forms
+    document.getElementById('startForm').classList.remove('fade-out', 'fade-in');
+    document.getElementById('ratingForm').classList.remove('fade-out', 'fade-in');
+    document.getElementById('researchForm').classList.remove('fade-out', 'fade-in');
+    document.getElementById('researchScenarios').classList.remove('fade-out', 'fade-in');
+    document.getElementById('designSprintForm').classList.remove('fade-out', 'fade-in');
+    document.getElementById('developmentForm').classList.remove('fade-out', 'fade-in');
+    document.getElementById('businessCaseSummary').classList.remove('fade-out', 'fade-in');
+    document.getElementById('leaderboard').classList.remove('fade-out', 'fade-in');
+    
+    // Hide the status window
+    toggleStatusWindow('startForm');
 }
 
 // Add event listener to the "Start Again" buttons
@@ -324,45 +434,9 @@ document.querySelectorAll('#startAgain').forEach(button => {
     button.addEventListener('click', resetGame);
 });
 
-// Event listener for development form submission
-document.getElementById('submitDevelopment').addEventListener('click', function(e) {
-    let developmentTimeValue = document.getElementById('developmentTime').value;
-    let developmentBudgetValue = document.getElementById('developmentBudget').value;
-    updateTimeCounter(developmentTimeValue);
-    updateBudgetCounter(developmentBudgetValue);
-
-    let expectedRevenue = calculateExpectedRevenue();
-    console.log(`Final score: ${expectedRevenue}`);
-
-    let ideaName = document.getElementById('ideaName').value;
-    let playerName = document.getElementById('playerName').value;
-
-    document.getElementById('developmentForm').style.display = 'none';
-    document.getElementById('businessCaseSummary').style.display = 'block';
-    document.getElementById('totalTime').textContent = totalTime + ' MD';
-    document.getElementById('totalBudget').textContent = totalBudget + '€';
-    document.getElementById('expectedRevenue').textContent = expectedRevenue + '€';
-
-    e.preventDefault();
-    set(ref(db, 'response/' + ideaName), {
-        Názov_nápadu: ideaName,
-        Meno_hráča: playerName,
-        Skore: expectedRevenue
-    }).then(() => {
-        alert("Dáta odoslané");
-
-        loadLeaderboardData();
-
-        document.getElementById('leaderboard').style.display = 'block';
-    }).catch((error) => {
-        console.error("Chyba pri ukladaní dát: ", error);
-    });
-
-    console.log('Business Case Summary zobrazený');
-});
-
 // Admin view event listeners
-document.getElementById('adminButton').addEventListener('click', function() {
+
+document.getElementById('innovationTitle').addEventListener('click', function() {
     document.getElementById('main-window').style.display = 'none';
     document.getElementById('adminView').style.display = 'block';
 });
@@ -384,11 +458,36 @@ document.getElementById('saveAdminSettings').addEventListener('click', function(
     alert('Settings saved successfully!');
 });
 
-// Function to handle form submission and progress to the next form
+// Function to handle form submission with animations and project status window toggle
 function handleFormSubmission(currentFormId, nextFormId) {
-    document.getElementById(currentFormId).style.display = 'none';
-    document.getElementById(nextFormId).style.display = 'block';
+    const currentForm = document.getElementById(currentFormId);
+    const nextForm = document.getElementById(nextFormId);
+
+    currentForm.classList.add('fade-out');
+    setTimeout(() => {
+        currentForm.style.display = 'none';
+        nextForm.style.display = 'block';
+        nextForm.classList.add('fade-in');
+
+        // Toggle project status window based on current form
+        toggleStatusWindow(nextFormId);
+    }, 500); // Match the duration of the slide-out animation
 }
+
+// Function to toggle project status window
+function toggleStatusWindow(formId) {
+    const statusWindow = document.getElementById('status-window');
+    const showStatusWindow = ['researchForm', 'researchScenarios', 'designSprintForm', 'developmentForm'];
+
+    if (showStatusWindow.includes(formId)) {
+        statusWindow.style.display = 'block';
+    } else {
+        statusWindow.style.display = 'none';
+    }
+}
+
+// Call toggleStatusWindow initially to hide the status window on page load
+toggleStatusWindow('startForm');
 
 // Event listeners for range input changes
 document.getElementById('researchTime').addEventListener('input', function() {
