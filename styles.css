@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f2f2f2; /* Svetlosivé pozadí stránky */
+    background-color: #f2f2f2; /* Svetlosivé pozadí stránky f2f2f2 */
     margin: 0; /* Odstranění vnějšího okraje */
     padding: 0; /* Odstranění vnitřního okraje */
 }
@@ -59,7 +59,14 @@ button:hover {
     border-radius: 5px;
 }
 
-
+.container-leaderboard {
+    max-width: 800px;
+    background-color: #ffffff; /* Bílé pozadí pro container */
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px;
+    margin: 20px auto; /* Vycentrovat container a přidat horní a dolní mezery */
+    padding: 20px;
+    border-radius: 5px;
+}
 
 .checkbox-group {
     margin-bottom: 10px;
@@ -103,3 +110,93 @@ button:hover {
 #leaderboardTable th {
     background-color: #f2f2f2;
 }
+
+.status-window {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.button-container button {
+    flex: 1;
+    margin: 0 5px;
+}
+
+.fade-in {
+    animation: fadeIn 0.5s forwards;
+}
+
+.fade-out {
+    animation: fadeOut 0.5s forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+/* Styles for the leaderboard window */
+    #leaderboardWindow {
+        position: relative;
+        padding: 20px;
+        margin-top: 20px;
+        border: 1px solid #ccc;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    #leaderboard {
+        max-width: 100%;
+        overflow-x: auto;
+    }
+
+    #leaderboard h2 {
+        margin-top: 0;
+    }
+
+    #leaderboardTable {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    #leaderboardTable th, #leaderboardTable td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    #leaderboardTable th {
+        background-color: #f2f2f2;
+    }
+
+    .button-group {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+
+    .button-group button {
+        margin-right: 10px;
+    }
