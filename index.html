@@ -9,162 +9,159 @@
 <body>
     <div class="container">
         <div id="main-window" class="main-window">
-            <button id="adminButton">Admin</button>
-            <h1>Innovation Minigame</h1>
+            <h1 id="innovationTitle">Innovation Minigame</h1>
             <!-- Formulár pre zadanie názvu nápadu a mena hráča -->
             <form id="startForm">
                 <label for="ideaName">Názov nápadu:</label>
                 <input type="text" id="ideaName" name="ideaName" required>
 
-                <label for="playerName">Vaše meno:</label>
+                <label for="playerName">Meno hráča:</label>
                 <input type="text" id="playerName" name="playerName" required>
 
-                <button id="submitStart" type="button">Ďalej</button>
-            </form>
+                <div class="button-container">
+                    <button id="submitStart" type="button">Ďalej</button>
+                </div>
+                            </form>
 
             <!-- Formulár pre hodnotenie nápadu (skrytý na začiatku) -->
             <form id="ratingForm" style="display: none;">
                 <div class="column">
                     <!-- Skupina Market -->                
                     <h2>Market</h2>
-                    <label for="scalability">Scalability:</label>
+                    <label for="scalability">Škálovatelnosť:</label>
                     <select id="scalability" name="scalability">
-                        <option value="1">Not scalable, internal efficiency for company-wide use</option>
-                        <option value="2">Product/service for selected types of clients in domestic market</option>
-                        <option value="3">Scalable solution for both clients and non-clients in local market</option>
-                        <option value="4">Scalable solution with potential to enter the european market</option>
-                        <option value="5">Globally scalable solution with potential to explore new markets</option>
+                        <option value="1">Neškálovatelné</option>
+                        <option value="2">Pre vybrané skupiny klientov</option>
+                        <option value="3">Pre klientov a ne-klientov na domácom trhu</option>
+                        <option value="4">Možnosť škálovať do európy</option>
+                        <option value="5">Potenciál škálovať na globálny trh</option>
                     </select>
 
-                    <label for="acquisition">Acquisition Potential:</label>
+                    <label for="acquisition">Akvizičný potenciál:</label>
                     <select id="acquisition" name="acquisition">
-                        <option value="1">No direct acquisition potential, but internal efficiency</option>
-                        <option value="2">Product/service for existing group of TB/RB clients</option>
-                        <option value="3">Solution with potential to acquire new SK clients</option>
-                        <option value="4">Solution with a significant acquisition potential within the SK</option>
-                        <option value="5">White-label solution with huge global acquisition potential</option>
+                        <option value="1">Žiadný akvizičný potenciál</option>
+                        <option value="2">Pre existujúcu skupinu klientov</option>
+                        <option value="3">Potencial osloviť nových klientov na domácom trhu</option>
+                        <option value="4">Potenciál osloviť klientov v európe</option>
+                        <option value="5">Potenciál osloviť klientov globálne</option>
                     </select>
 
-                    <label for="originality">Originality:</label>
+                    <label for="originality">Originalita:</label>
                     <select id="originality" name="originality">
-                        <option value="1">The innovation exist in some form in the domestic market</option>
-                        <option value="2">Adjacent idea not present in SK market, but in CEE probably yes</option>
-                        <option value="3">Adjacent innovation which is not widespread in the CEE market</option>
-                        <option value="4">Disruptive idea following the global market trends</option>
-                        <option value="5">Disruptive innovation with a potential to transform the industry</option>
+                        <option value="1">Inovácia existuje na domácom trhu</option>
+                        <option value="2">Inovácia existuje v susedských krajinách</option>
+                        <option value="3">Inovácia existuje na európskom thru</option>
+                        <option value="4">Inovácia, nasledujúca globálne trendy</option>
+                        <option value="5">Inovácia, ktorá na trhu nie je</option>
                     </select>
 
-                    <label for="marketRelevance">Market relevance:</label>
-                    <select id="marketRelevance" name="marketRelevance">
-                        <option value="1">Innovation idea with no significant impact on the market</option>
-                        <option value="2">Exploit the existing demand (red ocean) with many competitors</option>
-                        <option value="3">Idea with a potential of shifting from red to blue ocean</option>
-                        <option value="4">Explore idea creating and capturing a new demand (blue ocean)</option>
-                        <option value="5">Idea has a game-changing potential to transform the market</option>
-                    </select>
                 </div>
                 <div class="column">
-                <!-- Skupina Feasibility -->
-                    <h2>Feasibility</h2>
-                    <label for="techEconomic">Tech & Economic:</label>
+                    <!-- Skupina Feasibility -->
+                    <h2>Realizovateľnosť</h2>
+                    <label for="techEconomic">Technická a Ekonomická:</label>
                     <select id="techEconomic" name="techEconomic">
-                        <option value="1">Robust solution very difficult and expensive to develop</option>
-                        <option value="2">Expensive to develop, but feasible from tech. Point of view</option>
-                        <option value="3">Medium investment with straightforward tech. Development</option>
-                        <option value="4">Low fin. resources required and development is relatively feasible</option>
-                        <option value="5">Easy to develop, no issues from fin./tech. Point of view</option>
+                        <option value="1">Robustné riešenie veľmi náročné a drahé na vývoj</option>
+                        <option value="2">Drahé na vývoj, ale realizovateľné z technického hľadiska</option>
+                        <option value="3">Stredná investícia s priamočiarým technickým vývojom</option>
+                        <option value="4">Nízke finančné zdroje potrebné a vývoj je relatívne realizovateľný</option>
+                        <option value="5">Jednoduché na vývoj, žiadne problémy z finančného/technického hľadiska</option>
                     </select>
-
-                    <label for="capacityRequired">Capacity Required:</label>
+                
+                    <label for="capacityRequired">Požadovaná Kapacita:</label>
                     <select id="capacityRequired" name="capacityRequired">
-                        <option value="1">Over 5 teams need to be included together with external parties</option>
-                        <option value="2">Over 5 teams are required to work on the solution in-house</option>
-                        <option value="3">Medium capacity required, 3-5 teams could deliver the solution</option>
-                        <option value="4">Little capacity required, 1-2 teams needed to deliver the solution</option>
-                        <option value="5">Couple of employees can completely deliver the idea</option>
+                        <option value="1">Potrebné zahrnúť viac ako 5 tímov spolu s externými stranami</option>
+                        <option value="2">Potrebné zahrnúť viac ako 5 tímov na interné riešenie</option>
+                        <option value="3">Stredná kapacita požadovaná, 3-5 tímov by mohlo dodať riešenie</option>
+                        <option value="4">Malá kapacita požadovaná, 1-2 tímy potrebné na dodanie riešenia</option>
+                        <option value="5">Pár zamestnancov môže kompletne dodať nápad</option>
                     </select>
-
-                    <label for="integration">Integration:</label>
+                
+                    <label for="integration">Integrácia:</label>
                     <select id="integration" name="integration">
-                        <option value="1">Not possible to integrate to current bank´s products and systems</option>
-                        <option value="2">Integration would be difficult and requires new integration layers</option>
-                        <option value="3">Possible to integrate using bank´s existing integration layers</option>
-                        <option value="4">Possible to integrate into current bank´s products and systems</option>
-                        <option value="5">Integration would be easy and clear using existing systems</option>
+                        <option value="1">Nie je možné integrovať do súčasných produktov a systémov</option>
+                        <option value="2">Integrácia by bola náročná a vyžaduje nové integračné vrstvy</option>
+                        <option value="3">Možné integrovať pomocou existujúcich integračných vrstiev</option>
+                        <option value="4">Možné integrovať do súčasných produktov a systémov</option>
+                        <option value="5">Integrácia by bola jednoduchá a jasná pomocou existujúcich systémov</option>
                     </select>
                 </div>
                 <div class="column">
-                <!-- Skupina Impact -->
-                    <h2>Impact</h2>
-                    <label for="easeOfOperations">Ease of Operations:</label>
+                    <!-- Skupina Impact -->
+                    <h2>Dopad</h2>
+                    <label for="easeOfOperations">Jednoduchosť Prevádzky:</label>
                     <select id="easeOfOperations" name="easeOfOperations">
-                        <option value="1">Many adjustments required with a complicated maintenance</option>
-                        <option value="2">The solution requires a lot of ongoing adjustments</option>
-                        <option value="3">Solution is easy to operate, with standard level of maintenance</option>
-                        <option value="4">Stable solution, only a few adjustments needed in the future</option>
-                        <option value="5">The solution is totally stable and no adjustments are needed</option>
+                        <option value="1">Vyžaduje mnoho úprav a komplikovanú údržbu</option>
+                        <option value="2">Riešenie vyžaduje mnoho priebežných úprav</option>
+                        <option value="3">Riešenie je ľahké na prevádzku, so štandardnou úrovňou údržby</option>
+                        <option value="4">Stabilné riešenie, vyžaduje len pár úprav v budúcnosti</option>
+                        <option value="5">Riešenie je úplne stabilné a nevyžaduje žiadne úpravy</option>
                     </select>
-
-                    <label for="savingImpact">Saving Impact:</label>
+                
+                    <label for="savingImpact">Úsporný Dopad:</label>
                     <select id="savingImpact" name="savingImpact">
-                        <option value="1">No saving impact at all</option>
-                        <option value="2">Saving impact in terms of the optimization of processes</option>
-                        <option value="3">Serious saving impact in terms of financial or human capital</option>
-                        <option value="4">Big saving impact (both financial and human capital) in TB</option>
-                        <option value="5">Huge saving impact (fin. and human capital) on group level</option>
+                        <option value="1">Žiadny úsporný dopad</option>
+                        <option value="2">Úsporný dopad v optimalizácii procesov</option>
+                        <option value="3">Seriózny úsporný dopad v oblasti financií alebo ľudského kapitálu</option>
+                        <option value="4">Veľký úsporný dopad (financie aj ľudský kapitál)</option>
+                        <option value="5">Obrovský úsporný dopad (financie a ľudský kapitál)</option>
                     </select>
-
-                    <label for="strategicFit">Strategic Fit:</label>
+                
+                    <label for="strategicFit">Strategická Súladnosť:</label>
                     <select id="strategicFit" name="strategicFit">
-                        <option value="1">The solution is not in line with TB strategy</option>
-                        <option value="2">Not part of the strategy, but interesting topic to consider</option>
-                        <option value="3">Strategic fit and interesting topic to cover in the future</option>
-                        <option value="4">Strong strategic fit and could have place on the TB roadmap</option>
-                        <option value="5">The solution is totally in line with TB strategy and roadmap</option>
+                        <option value="1">Riešenie nie je v súlade so stratégiou</option>
+                        <option value="2">Nie je súčasťou stratégie, ale zaujímavé téma na zváženie</option>
+                        <option value="3">Strategický súlad a zaujímavá téma na pokrytie v budúcnosti</option>
+                        <option value="4">Silný strategický súlad a mohlo by mať miesto na roadmape</option>
+                        <option value="5">Riešenie je úplne v súlade so stratégiou a roadmapou</option>
                     </select>
                 </div>
                 <div class="column">
                     <!-- Skupina Product -->
-                    <h2>Product</h2>
+                    <h2>Produkt</h2>
                 
-                    <label for="valueAdded">Value Added:</label>
+                    <label for="valueAdded">Pridaná Hodnota:</label>
                     <select id="valueAdded" name="valueAdded">
-                        <option value="1">No added value, neither for a customer, nor for an employee</option>
-                        <option value="2">Novelty that brings a value to either customer or employee</option>
-                        <option value="3">Relevant and meaningful value proposition to a customer</option>
-                        <option value="4">Significant added value, idea aims to fulfill customer´s needs</option>
-                        <option value="5">Huge added value solving the customer´s problems and needs</option>
+                        <option value="1">Žiadna pridaná hodnota, ani pre zákazníka, ani pre zamestnanca</option>
+                        <option value="2">Novinka, ktorá prináša hodnotu buď zákazníkovi alebo zamestnancovi</option>
+                        <option value="3">Relevantná a zmysluplná hodnota pre zákazníka</option>
+                        <option value="4">Významná pridaná hodnota, nápad má za cieľ splniť potreby zákazníka</option>
+                        <option value="5">Obrovská pridaná hodnota riešiaca problémy a potreby zákazníka</option>
                     </select>
-
-                    <label for="businessImpact">Business Impact:</label>
+                
+                    <label for="businessImpact">Obchodný Dopad:</label>
                     <select id="businessImpact" name="businessImpact">
-                        <option value="1">No business / new revenue stream potential</option>
-                        <option value="2">Small potential for a new revenue stream or partnership</option>
-                        <option value="3">Big potential to explore new revenue streams or partnerships</option>
-                        <option value="4">Mean potential to create both new business and partnerships</option>
-                        <option value="5">Huge potential to create new revenue streams & partnerships</option>
+                        <option value="1">Žiadny obchodný / nový príjmový potenciál</option>
+                        <option value="2">Malý potenciál pre nový príjmový tok alebo partnerstvo</option>
+                        <option value="3">Veľký potenciál na skúmanie nových príjmových tokov alebo partnerstiev</option>
+                        <option value="4">Významný potenciál na vytvorenie nového biznisu a partnerstiev</option>
+                        <option value="5">Obrovský potenciál na vytvorenie nových príjmových tokov a partnerstiev</option>
                     </select>
-
+                
                     <label for="roi">ROI:</label>
                     <select id="roi" name="roi">
-                        <option value="1">No ROI at all (neither profits, nor cost-savings)</option>
-                        <option value="2">Potential of sufficient ROI in terms of profits or cost savings</option>
-                        <option value="3">Mean level of ROI requiring adequate development costs</option>
-                        <option value="4">Significant ROI in the long-term requiring high amount of costs</option>
-                        <option value="5">Huge ROI with immediate effect, requiring adequate costs</option>
+                        <option value="1">Žiadna návratnosť investícií (ani zisky, ani úspory)</option>
+                        <option value="2">Potenciál dostatočnej návratnosti investícií vo forme ziskov alebo úspor</option>
+                        <option value="3">Priemerná úroveň návratnosti investícií vyžadujúca primerané vývojové náklady</option>
+                        <option value="4">Významná návratnosť investícií v dlhodobom horizonte vyžadujúca vysoké náklady</option>
+                        <option value="5">Obrovská návratnosť investícií s okamžitým efektom, vyžadujúca primerané náklady</option>
                     </select>
-
-                    <label for="importance">Importance:</label>
+                
+                    <label for="importance">Dôležitosť:</label>
                     <select id="importance" name="importance">
-                        <option value="1">Low level of importance and priority for the bank</option>
-                        <option value="2">Exciting idea, but with no significant importance for the bank</option>
-                        <option value="3">Medium amount of importance, could be relevant for the bank</option>
-                        <option value="4">Important solution for the bank to stay relevant in the future</option>
-                        <option value="5">The idea is a must have innovation with a great importance</option>
+                        <option value="1">Nízká úroveň dôležitosti a priority</option>
+                        <option value="2">Vzrušujúci nápad, ale bez významnej dôležitosti</option>
+                        <option value="3">Stredná úroveň dôležitosti, mohla by byť relevantná</option>
+                        <option value="4">Dôležité riešenie, aby zostala relevantná v budúcnosti</option>
+                        <option value="5">Nápad je nevyhnutnou inováciou s veľkou dôležitosťou</option>
                     </select>
                 </div>
+                
 
-                <button id="submitRating" type="button">Ďalej</button>
+                <div class="button-container">
+                    <button id="backRating" type="button">Naspäť</button>
+                    <button id="submitRating" type="button">Ďalej</button>
+                </div>
             </form>
 
             <!-- Formulár pre výskum (skrytý na začiatku) -->
@@ -189,15 +186,24 @@
                 <label for="researchBudget">Rozpočet na výskum (€): <span id="researchBudgetLabel">0€</span></label>
                 <input type="range" id="researchBudget" name="researchBudget" min="0" max="30000" step="100" value="0">
             
-                <button id="submitResearch" type="button">Ďalej</button>
+                <div class="button-container">
+                    <button id="backResearch" type="button">Naspäť</button>
+                    <button id="submitResearch" type="button">Ďalej</button>
+                </div>
             </form>
 
             <!-- Zobrazenie scenárov výskumu (skryté na začiatku) -->
             <div id="researchScenarios" style="display: none;">
                 <h2>Research Scenario</h2>
                 <p id="scenarioText"></p>
-                <button id="option1"></button>
-                <button id="option2"></button>
+                <div class="option-container">
+                    <button id="option1"></button>
+                    <p id="option1Effects"></p>
+                </div>
+                <div class="option-container">
+                    <button id="option2"></button>
+                    <p id="option2Effects"></p>
+                </div>
             </div>
 
             <!-- Formulár pre design sprint (skrytý na začiatku) -->
@@ -210,7 +216,10 @@
                 <label for="designBudget">Rozpočet na design sprint (€): <span id="designBudgetLabel">0€</span></label>
                 <input type="range" id="designBudget" name="designBudget" min="0" max="30000" step="100" value="0">
 
-                <button id="submitDesignSprint" type="button">Ďalej</button>
+                <div class="button-container">
+                    <button id="backDesignSprint" type="button">Naspäť</button>
+                    <button id="submitDesignSprint" type="button">Ďalej</button>
+                </div>
             </form>
 
             <!-- Formulár pre development (skrytý na začiatku) -->
@@ -223,7 +232,10 @@
                 <label for="developmentBudget">Rozpočet na development (€): <span id="developmentBudgetLabel">0€</span></label>
                 <input type="range" id="developmentBudget" name="developmentBudget" min="0" max="30000" step="100" value="0">
 
-                <button id="submitDevelopment" type="button">Ďalej</button>
+                <div class="button-container">
+                    <button id="backDevelopment" type="button">Naspäť</button>
+                    <button id="submitDevelopment" type="button">Ďalej</button>
+                </div>
             </form>
 
             <!-- Časť pre business case summary (skrytá na začiatku) -->
@@ -231,26 +243,7 @@
                 <h2>Business Case Summary</h2>
                 <p>Celkový čas alokovaný do projektu: <span id="totalTime">0 MD</span></p>
                 <p>Celkový rozpočet alokovaný do projektu: <span id="totalBudget">0€</span></p>
-                <p>Očakávané výnosy: <span id="expectedRevenue">0€</span></p>
-                <button id="startAgain">Start Again</button>
-            </div>
-
-            <!-- Časť pre leaderboard -->
-            <div id="leaderboard" style="display: none;">
-                <h2>Leaderboard</h2>
-                <table id="leaderboardTable">
-                    <thead>
-                        <tr>
-                            <th>Meno hráča</th>
-                            <th>Názov nápadu</th>
-                            <th>Očakávané výnosy</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Sem budú dynamicky pridávané výsledky -->
-                    </tbody>
-                </table>
-                <button id="resetLeaderboard">Resetovať leaderboard</button>
+                <p>Skóre: <span id="expectedRevenue">0</span></p>
                 <button id="startAgain">Start Again</button>
             </div>
         </div>
@@ -270,9 +263,34 @@
             <button id="backToGame">Back to Game</button>
         </div>
 
-        <div id="timeCounter" style="display: none;"></div>
-        <div id="budgetCounter" style="display: none;"></div>
+        <!-- Nové okno pre zobrazenie počtu minutých MD a investovaných € -->
+        <div id="status-window" class="status-window" style="display: none;">
+            <h2>Prehľad</h2>
+            <p>Total MD Spent: <span id="totalMD">0</span></p>
+            <p>Total Budget Spent: <span id="totalBudgetStatus">0</span></p>
+        </div>
+
     </div>
+
+    <!-- Leaderboard -->
+    <div class="container-leaderboard" style="display: none;">
+        <div id="leaderboard">
+            <h2>Leaderboard</h2>
+            <table id="leaderboardTable">
+                <thead>
+                    <tr>
+                        <th>Meno hráča</th>
+                        <th>Názov nápadu</th>
+                        <th>Skóre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Sem budú dynamicky pridávané výsledky -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     <script type="module" src="script.js"></script>
 </body>
 </html>
