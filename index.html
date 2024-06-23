@@ -21,145 +21,40 @@
                 <div class="button-container">
                     <button id="submitStart" type="button">Ďalej</button>
                 </div>
-                            </form>
+            </form>
 
             <!-- Formulár pre hodnotenie nápadu (skrytý na začiatku) -->
             <form id="ratingForm" style="display: none;">
                 <div class="column">
                     <!-- Skupina Market -->                
                     <h2>Market</h2>
-                    <label for="scalability">Škálovatelnosť:</label>
-                    <select id="scalability" name="scalability">
-                        <option value="1">Neškálovatelné</option>
-                        <option value="2">Pre vybrané skupiny klientov</option>
-                        <option value="3">Pre klientov a ne-klientov na domácom trhu</option>
-                        <option value="4">Možnosť škálovať do európy</option>
-                        <option value="5">Potenciál škálovať na globálny trh</option>
-                    </select>
-
-                    <label for="acquisition">Akvizičný potenciál:</label>
-                    <select id="acquisition" name="acquisition">
-                        <option value="1">Žiadný akvizičný potenciál</option>
-                        <option value="2">Pre existujúcu skupinu klientov</option>
-                        <option value="3">Potencial osloviť nových klientov na domácom trhu</option>
-                        <option value="4">Potenciál osloviť klientov v európe</option>
-                        <option value="5">Potenciál osloviť klientov globálne</option>
-                    </select>
-
-                    <label for="originality">Originalita:</label>
-                    <select id="originality" name="originality">
-                        <option value="1">Inovácia existuje na domácom trhu</option>
-                        <option value="2">Inovácia existuje v susedských krajinách</option>
-                        <option value="3">Inovácia existuje na európskom thru</option>
-                        <option value="4">Inovácia, nasledujúca globálne trendy</option>
-                        <option value="5">Inovácia, ktorá na trhu nie je</option>
-                    </select>
-
+                    <label for="marketRating">Hodnotenie trhového potenciálu:</label>
+                    <input type="range" id="marketRating" name="marketRating" min="1" max="5" step="1" value="1">
+                    <p id="marketDescription"></p>
                 </div>
                 <div class="column">
                     <!-- Skupina Feasibility -->
-                    <h2>Realizovateľnosť</h2>
-                    <label for="techEconomic">Technická a Ekonomická:</label>
-                    <select id="techEconomic" name="techEconomic">
-                        <option value="1">Robustné riešenie veľmi náročné a drahé na vývoj</option>
-                        <option value="2">Drahé na vývoj, ale realizovateľné z technického hľadiska</option>
-                        <option value="3">Stredná investícia s priamočiarým technickým vývojom</option>
-                        <option value="4">Nízke finančné zdroje potrebné a vývoj je relatívne realizovateľný</option>
-                        <option value="5">Jednoduché na vývoj, žiadne problémy z finančného/technického hľadiska</option>
-                    </select>
-                
-                    <label for="capacityRequired">Požadovaná Kapacita:</label>
-                    <select id="capacityRequired" name="capacityRequired">
-                        <option value="1">Potrebné zahrnúť viac ako 5 tímov spolu s externými stranami</option>
-                        <option value="2">Potrebné zahrnúť viac ako 5 tímov na interné riešenie</option>
-                        <option value="3">Stredná kapacita požadovaná, 3-5 tímov by mohlo dodať riešenie</option>
-                        <option value="4">Malá kapacita požadovaná, 1-2 tímy potrebné na dodanie riešenia</option>
-                        <option value="5">Pár zamestnancov môže kompletne dodať nápad</option>
-                    </select>
-                
-                    <label for="integration">Integrácia:</label>
-                    <select id="integration" name="integration">
-                        <option value="1">Nie je možné integrovať do súčasných produktov a systémov</option>
-                        <option value="2">Integrácia by bola náročná a vyžaduje nové integračné vrstvy</option>
-                        <option value="3">Možné integrovať pomocou existujúcich integračných vrstiev</option>
-                        <option value="4">Možné integrovať do súčasných produktov a systémov</option>
-                        <option value="5">Integrácia by bola jednoduchá a jasná pomocou existujúcich systémov</option>
-                    </select>
+                    <h2>Feasibility</h2>
+                    <label for="feasibilityRating">Hodnotenie realizovateľnosti:</label>
+                    <input type="range" id="feasibilityRating" name="feasibilityRating" min="1" max="5" step="1" value="1">
+                    <p id="feasibilityDescription"></p>
                 </div>
                 <div class="column">
                     <!-- Skupina Impact -->
-                    <h2>Dopad</h2>
-                    <label for="easeOfOperations">Jednoduchosť Prevádzky:</label>
-                    <select id="easeOfOperations" name="easeOfOperations">
-                        <option value="1">Vyžaduje mnoho úprav a komplikovanú údržbu</option>
-                        <option value="2">Riešenie vyžaduje mnoho priebežných úprav</option>
-                        <option value="3">Riešenie je ľahké na prevádzku, so štandardnou úrovňou údržby</option>
-                        <option value="4">Stabilné riešenie, vyžaduje len pár úprav v budúcnosti</option>
-                        <option value="5">Riešenie je úplne stabilné a nevyžaduje žiadne úpravy</option>
-                    </select>
-                
-                    <label for="savingImpact">Úsporný Dopad:</label>
-                    <select id="savingImpact" name="savingImpact">
-                        <option value="1">Žiadny úsporný dopad</option>
-                        <option value="2">Úsporný dopad v optimalizácii procesov</option>
-                        <option value="3">Seriózny úsporný dopad v oblasti financií alebo ľudského kapitálu</option>
-                        <option value="4">Veľký úsporný dopad (financie aj ľudský kapitál)</option>
-                        <option value="5">Obrovský úsporný dopad (financie a ľudský kapitál)</option>
-                    </select>
-                
-                    <label for="strategicFit">Strategická Súladnosť:</label>
-                    <select id="strategicFit" name="strategicFit">
-                        <option value="1">Riešenie nie je v súlade so stratégiou</option>
-                        <option value="2">Nie je súčasťou stratégie, ale zaujímavé téma na zváženie</option>
-                        <option value="3">Strategický súlad a zaujímavá téma na pokrytie v budúcnosti</option>
-                        <option value="4">Silný strategický súlad a mohlo by mať miesto na roadmape</option>
-                        <option value="5">Riešenie je úplne v súlade so stratégiou a roadmapou</option>
-                    </select>
+                    <h2>Impact</h2>
+                    <label for="impactRating">Dopad Vášho nápadu:</label>
+                    <input type="range" id="impactRating" name="impactRating" min="1" max="5" step="1" value="1">
+                    <p id="impactDescription"></p>
                 </div>
                 <div class="column">
                     <!-- Skupina Product -->
-                    <h2>Produkt</h2>
-                
-                    <label for="valueAdded">Pridaná Hodnota:</label>
-                    <select id="valueAdded" name="valueAdded">
-                        <option value="1">Žiadna pridaná hodnota, ani pre zákazníka, ani pre zamestnanca</option>
-                        <option value="2">Novinka, ktorá prináša hodnotu buď zákazníkovi alebo zamestnancovi</option>
-                        <option value="3">Relevantná a zmysluplná hodnota pre zákazníka</option>
-                        <option value="4">Významná pridaná hodnota, nápad má za cieľ splniť potreby zákazníka</option>
-                        <option value="5">Obrovská pridaná hodnota riešiaca problémy a potreby zákazníka</option>
-                    </select>
-                
-                    <label for="businessImpact">Obchodný Dopad:</label>
-                    <select id="businessImpact" name="businessImpact">
-                        <option value="1">Žiadny obchodný / nový príjmový potenciál</option>
-                        <option value="2">Malý potenciál pre nový príjmový tok alebo partnerstvo</option>
-                        <option value="3">Veľký potenciál na skúmanie nových príjmových tokov alebo partnerstiev</option>
-                        <option value="4">Významný potenciál na vytvorenie nového biznisu a partnerstiev</option>
-                        <option value="5">Obrovský potenciál na vytvorenie nových príjmových tokov a partnerstiev</option>
-                    </select>
-                
-                    <label for="roi">ROI:</label>
-                    <select id="roi" name="roi">
-                        <option value="1">Žiadna návratnosť investícií (ani zisky, ani úspory)</option>
-                        <option value="2">Potenciál dostatočnej návratnosti investícií vo forme ziskov alebo úspor</option>
-                        <option value="3">Priemerná úroveň návratnosti investícií vyžadujúca primerané vývojové náklady</option>
-                        <option value="4">Významná návratnosť investícií v dlhodobom horizonte vyžadujúca vysoké náklady</option>
-                        <option value="5">Obrovská návratnosť investícií s okamžitým efektom, vyžadujúca primerané náklady</option>
-                    </select>
-                
-                    <label for="importance">Dôležitosť:</label>
-                    <select id="importance" name="importance">
-                        <option value="1">Nízká úroveň dôležitosti a priority</option>
-                        <option value="2">Vzrušujúci nápad, ale bez významnej dôležitosti</option>
-                        <option value="3">Stredná úroveň dôležitosti, mohla by byť relevantná</option>
-                        <option value="4">Dôležité riešenie, aby zostala relevantná v budúcnosti</option>
-                        <option value="5">Nápad je nevyhnutnou inováciou s veľkou dôležitosťou</option>
-                    </select>
+                    <h2>Product</h2>
+                    <label for="productRating">Hodnotenie prínosu a obchodného dopadu:</label>
+                    <input type="range" id="productRating" name="productRating" min="1" max="5" step="1" value="1">
+                    <p id="productDescription"></p>
                 </div>
-                
-
-                <div class="button-container">
-                    <button id="backRating" type="button">Naspäť</button>
+                <div class="button-group">
+                    <button id="backRating" type="button">Späť</button>
                     <button id="submitRating" type="button">Ďalej</button>
                 </div>
             </form>
@@ -167,25 +62,23 @@
             <!-- Formulár pre výskum (skrytý na začiatku) -->
             <form id="researchForm" style="display: none;">
                 <h2>Výskum</h2>
-                <div class="checkbox-group">
-                    <label for="quantitative">Kvantitatívny</label>
-                    <input type="checkbox" id="quantitative" name="researchType" value="quantitative">
+                <div class="research-option">
+                    <button type="button" id="qualitativeButton">
+                        <img src="images/qualitative.png" alt="Kvalitatívny výskum">
+                        <span>Kvalitatívny</span>
+                    </button>
+                    <button type="button" id="quantitativeButton">
+                        <img src="images/quantitative.png" alt="Kvantitatívny výskum">
+                        <span>Kvantitatívny</span>
+                    </button>
                 </div>
-                <div class="checkbox-group">
-                    <label for="qualitative">Kvalitatívny</label>
-                    <input type="checkbox" id="qualitative" name="researchType" value="qualitative">
-                </div>
-                <div class="checkbox-group">
-                    <label for="mixed">Kombinovaný</label>
-                    <input type="checkbox" id="mixed" name="researchType" value="mixed">
-                </div>
-            
+                
                 <label for="researchTime">Čas na výskum (hodiny): <span id="researchTimeLabel">0 MD</span></label>
                 <input type="range" id="researchTime" name="researchTime" min="0" max="10" step="1" value="0">
-        
+
                 <label for="researchBudget">Rozpočet na výskum (€): <span id="researchBudgetLabel">0€</span></label>
                 <input type="range" id="researchBudget" name="researchBudget" min="0" max="30000" step="100" value="0">
-            
+
                 <div class="button-container">
                     <button id="backResearch" type="button">Naspäť</button>
                     <button id="submitResearch" type="button">Ďalej</button>
